@@ -1,5 +1,5 @@
 import { useState } from "react";
-import MapComponent from "./components/MapComponent";
+import MapComponent from "./components/MapComonents/MapComponent";
 import SearchBar from "./components/SearchBar";
 
 export default function App() {

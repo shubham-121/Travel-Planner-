@@ -13,3 +13,7 @@ body,
 .border-custom {
   @apply border-2 border-black border-solid;
 }
+
+.text-custom {
+  @apply text-center text-xl font-semibold;
+}
