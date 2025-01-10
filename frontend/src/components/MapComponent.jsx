@@ -15,10 +15,7 @@ const API_KEY = "ca5563e6679e4af0afa074f4b379e8ee"; //for reverse geocoding
 //here the map is rendered to page
 export default function MapComponent() {
   return (
-    <div>
-      <p className="text-center font-semibold text-xl mb-4 border-custom mt-1">
-        Itinerary Planner
-      </p>
+    <div className="h-screen w-full  ">
       <RenderMap></RenderMap>
     </div>
   );
@@ -62,12 +59,12 @@ function RenderMap() {
   }
 
   return (
-    <div className="h-screen">
+    <div className="h-screen z-0">
       <MapContainer
         center={cordinates}
         zoom={13}
         scrollWheelZoom={true}
-        className="h-full w-full"
+        className="h-full w-full max-h-[100%] "
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
