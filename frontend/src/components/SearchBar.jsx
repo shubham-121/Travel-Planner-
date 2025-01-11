@@ -1,17 +1,38 @@
 import { useState } from "react";
 import Button from "./Button";
 import { useMapEvents } from "react-leaflet";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserSearchLocation } from "../Slices/SearchSlice";
 
 const API_KEY = import.meta.env.VITE_API_kEY;
 export default function SearchBar() {
   return (
     <div className="flex flex-col items-center w-full z-50">
-      <p className="text-center w-full bg-green-300 rounded-full font-semibold text-xl mb-1 border-custom mt-1">
-        Itinerary Planner
-      </p>
+      <HeaderTitle></HeaderTitle>
       <Search />
     </div>
   );
+}
+function HeaderTitle() {
+  return (
+    <div className="border-custom w-full mt-1 rounded-[10px] flex items-center bg-green-300 font-semibold text-xl p-2">
+      {/* Home Button (left-aligned) */}
+      <button className="text-sm sm:text-base px-2 py-1">Home</button>
+      {/* Title (center-aligned) */}
+      <p className="flex-grow text-center underline text-sm sm:text-lg">
+        Itinerary Planner
+      </p>
+    </div>
+  );
+}
+
+{
+  /* <Button
+  content={"Home"}
+  className={
+    "bg-green-400 min-w-[10%] rounded-full w-[70px]  font-semibold text-l italic  hover:scale-105"
+  }
+/>; */
 }
 
 function Search() {
@@ -19,6 +40,9 @@ function Search() {
   const [searchCoords, setSearchCoords] = useState([]); //state for holding the search location coords after fetching the location by user
   const [error, setError] = useState("");
   const [loading, setLoading] = useState();
+
+  const { searchLocCoords } = useSelector((store) => store.SearchByLocation);
+  const dispatch = useDispatch();
 
   //forward geocoding->find coords of location entered by user
 
@@ -50,9 +74,12 @@ function Search() {
 
       console.log(data);
       const { lat, lng } = data.results[0].geometry;
+      // console.log("Lat and lng:", lat, lng);
       setSearchCoords([lat, lng]);
       setError("");
       setLoading(false);
+
+      dispatch(setUserSearchLocation({ lat, lng })); //set global state
     } catch (error) {
       console.error("Invalid Location : ", error.message);
       setError("Invalid Location");
@@ -65,13 +92,7 @@ function Search() {
   }
 
   return (
-    <div className="flex  items-center justify-center w-full space-x-4 mt-2">
-      <Button
-        content={"Home"}
-        className={
-          "bg-green-400 min-w-[10%] rounded-full w-[70px]  font-semibold text-l italic  hover:scale-105"
-        }
-      />
+    <div className="flex bg-green-200   items-center justify-center w-full space-x-4 mt-2">
       <input
         value={searchLocation}
         onChange={(e) => setSearchLocation(e.target.value)}

@@ -4,14 +4,21 @@ import {
   Marker,
   Popup,
   TileLayer,
+  useMap,
   useMapEvent,
 } from "react-leaflet";
 import RenderMarker from "./RenderMarker";
+import { useDispatch, useSelector } from "react-redux";
+import store from "../../store";
+import { deleteUserSearchLocation } from "../../Slices/SearchSlice";
 
 //render the whole map
 export default function RenderMap() {
   const [cordinates, setCordinates] = useState(null);
   const [clickedMarker, setClickedMarker] = useState(null);
+
+  const { searchLocCoords } = useSelector((store) => store.SearchByLocation);
+  const dispatch = useDispatch();
 
   // const [clickedMarker, setClickedMarker] = useState(null);
 
@@ -84,7 +91,35 @@ export default function RenderMap() {
           setClickedMarker={setClickedMarker}
         />
         <SetViewOnClick animateRef={animateRef} />
+        {<FlyToLocation></FlyToLocation>}
       </MapContainer>
     </div>
   );
+}
+
+//Move the map to the user entered search location
+function FlyToLocation() {
+  const { searchLocCoords } = useSelector((store) => store.SearchByLocation);
+  const dispatch = useDispatch();
+
+  const map = useMap();
+
+  useEffect(() => {
+    const [searchLat, searchLng] = searchLocCoords;
+
+    if (searchLat && searchLng) {
+      map.flyTo([searchLat, searchLng], 14, {
+        animate: true,
+        easeLinearity: 0.25,
+        duration: 2,
+      });
+
+      //empty the global state searchLocCoords after the map moves to the search location
+      setTimeout(() => {
+        dispatch(deleteUserSearchLocation());
+      }, 2000);
+    }
+  }, [searchLocCoords, map, dispatch]);
+
+  return null;
 }

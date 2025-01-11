@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Marker, Popup, useMapEvents } from "react-leaflet";
+import Button from "../Button";
+import RenderButtonsOnMarker from "./RenderButtonsOnMarker";
 
 const API_KEY = import.meta.env.VITE_API_kEY; //for reverse geocoding
 
@@ -58,11 +60,14 @@ export default function RenderMarker({ clickedMarker, setClickedMarker }) {
     clickedMarker && (
       <Marker position={clickedMarker}>
         <Popup>
-          You clicked here <br /> On this location. <br />
-          {`Clicked coords: ${clickedMarker}`} <br />
+          You clicked here: <br />
+          {/* {`Clicked coords: ${clickedMarker}`} <br /> */}
           {reverseGeocodeData
-            ? `Place name: ${reverseGeocodeData}`
+            ? `${reverseGeocodeData}`
             : "Fetching place name..."}{" "}
+          <RenderButtonsOnMarker
+            clickedLocation={reverseGeocodeData}
+          ></RenderButtonsOnMarker>
         </Popup>
       </Marker>
     )
