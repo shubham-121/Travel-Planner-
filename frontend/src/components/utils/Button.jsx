@@ -1,3 +1,5 @@
+//custom button
+
 export default function Button({ content, className, onClick }) {
   return (
     <div>

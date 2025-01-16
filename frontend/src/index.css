@@ -18,3 +18,10 @@ body,
 .text-custom {
   @apply text-center text-xl font-semibold;
 }
+
+.leaflet-popup-content {
+  font-weight: 700; /* Matches font-semibold in Tailwind */
+  font-size: 1.125rem; /* Matches Tailwind's text-lg */
+  color: #374151; /* Optional: Tailwind's text-gray-700 equivalent */
+  line-height: 1.5; /* Improves readability */
+}

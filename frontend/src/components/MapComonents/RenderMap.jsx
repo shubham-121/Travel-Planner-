@@ -14,7 +14,7 @@ import { deleteUserSearchLocation } from "../../Slices/SearchSlice";
 
 //render the whole map
 export default function RenderMap() {
-  const [cordinates, setCordinates] = useState(null);
+  const [cordinates, setCordinates] = useState([30.322, 78.03]); //default coords
   const [clickedMarker, setClickedMarker] = useState(null);
 
   const { searchLocCoords } = useSelector((store) => store.SearchByLocation);
@@ -67,18 +67,29 @@ export default function RenderMap() {
     return null;
   }
 
+  function SetMaxZoom() {
+    const map = useMap();
+    useEffect(() => {
+      map.setMaxZoom(18); // Set max zoom manually
+    }, [map]);
+
+    return null;
+  }
+
   return (
-    <div className="h-screen z-0">
+    <div className=" h-screen z-0">
       <MapContainer
         center={cordinates}
-        zoom={13}
+        zoom={13} // Initial zoom level
+        minZoom={4} // minimum zoom level
         scrollWheelZoom={true}
-        className="h-full w-full max-h-[100%] "
+        className="h-full w-full max-h-[100%] z-0"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        {/* <SetMaxZoom></SetMaxZoom> */}
         <Marker position={cordinates}>
           <Popup>
             Home:
@@ -91,6 +102,19 @@ export default function RenderMap() {
           setClickedMarker={setClickedMarker}
         />
         <SetViewOnClick animateRef={animateRef} />
+
+        {/* render markerr for search location */}
+        {searchLocCoords && searchLocCoords.length > 0 && (
+          <Marker position={searchLocCoords}>
+            <Popup>
+              Your Search Location
+              <br />
+              {`Latitude: ${searchLocCoords[0]}, Longitude: ${searchLocCoords[1]}`}
+            </Popup>
+          </Marker>
+        )}
+        {/* till here */}
+
         {<FlyToLocation></FlyToLocation>}
       </MapContainer>
     </div>
@@ -115,6 +139,7 @@ function FlyToLocation() {
       });
 
       //empty the global state searchLocCoords after the map moves to the search location
+      //remover this below code tomorrow
       setTimeout(() => {
         dispatch(deleteUserSearchLocation());
       }, 2000);
@@ -123,3 +148,4 @@ function FlyToLocation() {
 
   return null;
 }
+//render the marker also with the flyto location

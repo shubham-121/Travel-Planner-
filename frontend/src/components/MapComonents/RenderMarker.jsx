@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Marker, Popup, useMapEvents } from "react-leaflet";
-import Button from "../Button";
+import Button from "./../utils/Button";
 import RenderButtonsOnMarker from "./RenderButtonsOnMarker";
 
 const API_KEY = import.meta.env.VITE_API_kEY; //for reverse geocoding
