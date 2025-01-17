@@ -2,6 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   searchLocCoords: [], //global state for holding search location coords
+  searchLocName: "", //global state for holding search location name
 };
 
 const SearchSlice = createSlice({
@@ -21,10 +22,17 @@ const SearchSlice = createSlice({
       state.searchLocCoords = [];
       console.log("updated state after delete", state.searchLocCoords);
     },
+    setSearchLocationName(state, action) {
+      console.log("User entered search location:", action.payload);
+      state.searchLocName = action.payload;
+    },
   },
 });
 
 export default SearchSlice.reducer;
 
-export const { setUserSearchLocation, deleteUserSearchLocation } =
-  SearchSlice.actions;
+export const {
+  setUserSearchLocation,
+  deleteUserSearchLocation,
+  setSearchLocationName,
+} = SearchSlice.actions;

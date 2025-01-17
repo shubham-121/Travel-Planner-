@@ -17,6 +17,8 @@ export default function App() {
   );
 }
 
+
+//render the features modal when the user clicks any one of the three
 function RenderModalWindow() {
   const { isFavClicked, isWishClicked, isVistClicked } = useSelector(
     (store) => store.Features

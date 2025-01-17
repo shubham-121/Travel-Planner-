@@ -11,13 +11,16 @@ import RenderMarker from "./RenderMarker";
 import { useDispatch, useSelector } from "react-redux";
 import store from "../../store";
 import { deleteUserSearchLocation } from "../../Slices/SearchSlice";
+import RenderButtonsOnMarker from "./RenderButtonsOnMarker";
 
 //render the whole map
 export default function RenderMap() {
   const [cordinates, setCordinates] = useState([30.322, 78.03]); //default coords
   const [clickedMarker, setClickedMarker] = useState(null);
 
-  const { searchLocCoords } = useSelector((store) => store.SearchByLocation);
+  const { searchLocCoords, searchLocName } = useSelector(
+    (store) => store.SearchByLocation
+  );
   const dispatch = useDispatch();
 
   // const [clickedMarker, setClickedMarker] = useState(null);
@@ -105,13 +108,24 @@ export default function RenderMap() {
 
         {/* render markerr for search location */}
         {searchLocCoords && searchLocCoords.length > 0 && (
-          <Marker position={searchLocCoords}>
-            <Popup>
-              Your Search Location
-              <br />
-              {`Latitude: ${searchLocCoords[0]}, Longitude: ${searchLocCoords[1]}`}
-            </Popup>
-          </Marker>
+          <>
+            <Marker position={searchLocCoords}>
+              <Popup>
+                Your Searched Location:
+                <br />
+                {/* /*convert string first char to uppercase below*/}
+                {searchLocName.charAt(0).toUpperCase() + searchLocName.slice(1)}
+                <RenderButtonsOnMarker
+                  clickedLocation={`Searched Location: ${
+                    searchLocName.charAt(0).toUpperCase() +
+                    searchLocName.slice(1)
+                  } [Lat: ${searchLocCoords[0].toFixed(
+                    3
+                  )}, Lng: ${searchLocCoords[1].toFixed(3)}]`}
+                ></RenderButtonsOnMarker>
+              </Popup>
+            </Marker>
+          </>
         )}
         {/* till here */}
 
@@ -140,9 +154,9 @@ function FlyToLocation() {
 
       //empty the global state searchLocCoords after the map moves to the search location
       //remover this below code tomorrow
-      setTimeout(() => {
-        dispatch(deleteUserSearchLocation());
-      }, 2000);
+      // setTimeout(() => {
+      //   dispatch(deleteUserSearchLocation());
+      // }, 2000);
     }
   }, [searchLocCoords, map, dispatch]);
 

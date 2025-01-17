@@ -2,7 +2,10 @@ import { useState } from "react";
 import Button from "./utils/Button";
 import { useMapEvents } from "react-leaflet";
 import { useSelector, useDispatch } from "react-redux";
-import { setUserSearchLocation } from "../Slices/SearchSlice";
+import {
+  setSearchLocationName,
+  setUserSearchLocation,
+} from "../Slices/SearchSlice";
 import store from "../store";
 import {
   toggleFavModal,
@@ -10,6 +13,7 @@ import {
   toggleWishModal,
 } from "../Slices/FeaturesSlice";
 import Modal from "./utils/Modal";
+import { useNavigate } from "react-router";
 
 const API_KEY = import.meta.env.VITE_API_kEY;
 export default function SearchBar() {
@@ -46,17 +50,27 @@ export default function SearchBar() {
 // }
 
 function HeaderTitle() {
+  const navigate = useNavigate();
   return (
     <div className="border-custom w-full  rounded-[10px] flex items-center bg-green-300 font-semibold text-xl px-4 py-3 shadow-lg">
       {/* Left Section */}
       <div className="flex space-x-4">
-        <button className="text-sm sm:text-base px-3 py-1 rounded-md bg-green-400 hover:bg-green-500 text-white transition-all">
+        <button
+          className="text-sm sm:text-base px-3 py-1 rounded-md bg-green-400 hover:bg-green-500 text-white transition-all"
+          onClick={() => navigate("/home")}
+        >
           Home
         </button>
-        <button className="text-sm sm:text-base px-3 py-1 rounded-md bg-green-400 hover:bg-green-500 text-white transition-all">
+        <button
+          className="text-sm sm:text-base px-3 py-1 rounded-md bg-green-400 hover:bg-green-500 text-white transition-all"
+          onClick={() => navigate("/aboutus")}
+        >
           About Us
-        </button>
-        <button className="text-sm sm:text-base px-3 py-1 rounded-md bg-green-400 hover:bg-green-500 text-white transition-all">
+        </button>{" "}
+        <button
+          className="text-sm sm:text-base px-3 py-1 rounded-md bg-green-400 hover:bg-green-500 text-white transition-all"
+          onClick={() => navigate("/contactus")}
+        >
           Contact Us
         </button>
       </div>
@@ -69,12 +83,18 @@ function HeaderTitle() {
       {/* Right Section */}
       <div className="flex space-x-4 justify-start items-start">
         {/* {conditionally render this based on user login or new user} */}
-        <button className="text-sm sm:text-base px-3 py-1 rounded-md bg-blue-400 hover:bg-blue-500 text-white transition-all">
+        <button
+          className="text-sm sm:text-base px-3 py-1 rounded-md bg-blue-400 hover:bg-blue-500 text-white transition-all"
+          onClick={() => navigate("/signin")}
+        >
           My Account/Sign Up
         </button>
         {/* {conditionally render this based on user login or new user} */}
 
-        <button className="text-sm sm:text-base px-3 py-1 rounded-md bg-blue-400 hover:bg-blue-500 text-white transition-all">
+        <button
+          className="text-sm sm:text-base px-3 py-1 rounded-md bg-blue-400 hover:bg-blue-500 text-white transition-all"
+          onClick={() => navigate("/myItineraries")}
+        >
           Your Itineraries
         </button>
       </div>
@@ -128,6 +148,7 @@ function Search() {
       setLoading(false);
 
       dispatch(setUserSearchLocation({ lat, lng })); //set global state
+      dispatch(setSearchLocationName(searchLocation)); //set search location name globally
     } catch (error) {
       console.error("Invalid Location : ", error.message);
       setError("Invalid Location");
