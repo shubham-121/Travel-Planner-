@@ -6,6 +6,7 @@ import MyItineraries from "./components/ExtraComponents/MyItineraries";
 import Login from "./components/ExtraComponents/Login";
 import Signin from "./components/ExtraComponents/Signin";
 import Homepage from "./components/ExtraComponents/Homepage";
+import PasswordChange from "./components/ExtraComponents/PasswordChange";
 
 const appRouter = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/signin",
     element: <Signin></Signin>,
+  },
+  {
+    path: "/passwordChange",
+    element: <PasswordChange></PasswordChange>,
   },
 ]);
 

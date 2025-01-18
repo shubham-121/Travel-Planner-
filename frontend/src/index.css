@@ -25,3 +25,13 @@ body,
   color: #374151; /* Optional: Tailwind's text-gray-700 equivalent */
   line-height: 1.5; /* Improves readability */
 }
+
+/* .gradient-custom {
+  @apply background: rgb(2,0,36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 0.38856006269695376) 26%,
+    rgba(0, 212, 255, 1) 100%
+  );
+} */
