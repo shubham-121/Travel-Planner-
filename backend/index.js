@@ -9,6 +9,8 @@ require("dotenv").config(); //load env variables to this file
 const User = require("./models/userModel");
 const registerUser = require("./controllers/user/register");
 const loginUser = require("./controllers/user/login");
+const userPasswordChangeVerify = require("./controllers/user/verify-passwordChange");
+const userPasswordChangeUpdate = require("./controllers/user/update-passwordChange");
 
 const app = express();
 
@@ -35,6 +37,9 @@ app.get("/", (req, res) => {
 app.post("/signin", registerUser);
 
 app.post("/login", loginUser);
+
+app.post("/passwordChange", userPasswordChangeVerify);
+app.patch("/passwordChange", userPasswordChangeUpdate);
 
 //server run
 const PORT = process.env.PORT || 5000;

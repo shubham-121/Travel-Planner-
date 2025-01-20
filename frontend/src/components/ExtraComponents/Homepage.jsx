@@ -1,6 +1,9 @@
+import { Outlet } from "react-router";
+
 export default function Homepage() {
   return (
     <div className="bg-[url('https://images.travelandleisureasia.com/wp-content/uploads/sites/3/2024/09/21141044/world-tourism-day.jpeg')] bg-cover bg-no-repeat h-[105vh] w-[100vw]  relative  z-[1000]">
+      <Outlet></Outlet>
       <Header />
       <BodyContent />
       <Footer />

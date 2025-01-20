@@ -1,3 +1,6 @@
 # Ignore .env file (environment variables)
 .env
 .env.test
+
+#ignore the node modules
+node_modules/

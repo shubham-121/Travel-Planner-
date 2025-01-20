@@ -98,7 +98,10 @@ function LogInForm() {
           className="w-full mb-4 p-2 border rounded"
         />
 
-        <Link onClick={() => navigate("/passwordChange")}>
+        <Link
+          onClick={() => navigate("/passwordChange")}
+          className="hover:text-blue-900"
+        >
           Forgot Password?
         </Link>
 

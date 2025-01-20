@@ -1,6 +1,7 @@
 import img from "../../images/travel.jpg";
 import taxiimg from "../../images/taxii.jpg";
 import worldimg from "../../images/world.jpg";
+import { Outlet } from "react-router";
 
 export default function AboutUs() {
   return (
@@ -8,6 +9,7 @@ export default function AboutUs() {
       className="min-h-screen bg-gray-400 overflow-hidden"
       style={{ backgroundAttachment: "fixed" }}
     >
+      <Outlet></Outlet>
       <Header></Header>
       <MainBody></MainBody>
       <MainContent></MainContent>

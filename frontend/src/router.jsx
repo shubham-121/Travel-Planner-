@@ -7,6 +7,7 @@ import Login from "./components/ExtraComponents/Login";
 import Signin from "./components/ExtraComponents/Signin";
 import Homepage from "./components/ExtraComponents/Homepage";
 import PasswordChange from "./components/ExtraComponents/PasswordChange";
+import { HeaderTitle } from "./components/SearchBar";
 
 const appRouter = createBrowserRouter([
   {
@@ -16,14 +17,35 @@ const appRouter = createBrowserRouter([
   {
     path: "/home",
     element: <Homepage></Homepage>,
+    children: [
+      {
+        index: true,
+        element: <HeaderTitle></HeaderTitle>,
+        //  render header title also in the homepage route using outlet
+      },
+    ],
   },
   {
     path: "/aboutus",
     element: <AboutUs></AboutUs>,
+    children: [
+      {
+        index: true,
+        element: <HeaderTitle></HeaderTitle>,
+        //  render header title also in the about route using outlet
+      },
+    ],
   },
   {
     path: "/contactus",
     element: <ContactUs></ContactUs>,
+    children: [
+      {
+        index: true,
+        element: <HeaderTitle></HeaderTitle>,
+        //  render header title also in the contact route using outlet
+      },
+    ],
   },
   {
     path: "/myItineraries",

@@ -49,7 +49,7 @@ export default function SearchBar() {
 //   );
 // }
 
-function HeaderTitle() {
+export function HeaderTitle() {
   const navigate = useNavigate();
   return (
     <div className="border-custom w-full  rounded-[10px] flex items-center bg-green-300 font-semibold text-xl px-4 py-3 shadow-lg">
