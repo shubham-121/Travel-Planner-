@@ -85,7 +85,8 @@ export function HeaderTitle() {
         {/* {conditionally render this based on user login or new user} */}
         <button
           className="text-sm sm:text-base px-3 py-1 rounded-md bg-blue-400 hover:bg-blue-500 text-white transition-all"
-          onClick={() => navigate("/signin")}
+          // onClick={() => navigate("/signin")}
+          onClick={() => navigate("/login")}
         >
           My Account/Sign Up
         </button>

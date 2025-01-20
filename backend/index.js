@@ -44,3 +44,6 @@ app.patch("/passwordChange", userPasswordChangeUpdate);
 //server run
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server is up and running"));
+
+//session based auth: 1- user login  2- generate and assign session id  3- set cookies for session id
+//  4- create function to check session id exists or not based on this allow user access
