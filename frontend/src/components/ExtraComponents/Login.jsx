@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router";
+import { setActiveUser, toggleActiveUser } from "../../Slices/ActiveUserSlice";
 
 export default function SignIn() {
   return (
@@ -11,6 +13,8 @@ export default function SignIn() {
 
 function LogInForm() {
   const navigate = useNavigate();
+  const { isUserActive } = useSelector((store) => store.ActiveUser);
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     //state for holding form data
@@ -53,6 +57,11 @@ function LogInForm() {
       if (res.status === 200) {
         console.log(data);
         alert("Successfully logged in the user.");
+
+        //set the isActiveUser active globally
+        dispatch(toggleActiveUser());
+        //set the active user data globally
+        dispatch(setActiveUser(data.searchedUser));
 
         //reset form fields
         setFormData({
@@ -99,12 +108,21 @@ function LogInForm() {
           className="w-full mb-4 p-2 border rounded"
         />
 
-        <Link
-          onClick={() => navigate("/passwordChange")}
-          className="hover:text-blue-900"
-        >
-          Forgot Password?
-        </Link>
+        <div className="flex flex-col justify-center">
+          <Link
+            onClick={() => navigate("/passwordChange")}
+            className="hover:text-blue-900"
+          >
+            Forgot Password?
+          </Link>
+
+          <Link
+            onClick={() => navigate("/signin")}
+            className="hover:text-blue-900"
+          >
+            New User?
+          </Link>
+        </div>
 
         <button
           onClick={handleSubmit}
@@ -116,47 +134,3 @@ function LogInForm() {
     </div>
   );
 }
-
-//  //register user data to backend
-//   async function handleSubmit(e) {
-//     //form validation first
-//     if (!formData.name || !formData.email || !formData.password) {
-//       // alert("All fields are required");
-//       return;
-//     }
-
-//     e.preventDefault();
-
-//     try {
-//       const res = await fetch("http://localhost:5000/signin", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(formData),
-//       });
-
-//       const data = await res.json();
-
-//       if (res.status === 200) {
-//         console.log(data);
-//         alert("Successfully registered the user.");
-
-//         //reset form fields
-//         setFormData({
-//           name: "",
-//           email: "",
-//           password: "",
-//         });
-
-//         //navigate to home route
-//         navigate("/");
-//       } else {
-//         console.error("Error:", data.message || "Unknown error");
-//         alert(data.message || "Error in registering the user.");
-//       }
-//     } catch (err) {
-//       console.error("Error in registering the user", err);
-//       alert("An unexpected error occurred. Please try again.");
-//     }
-//   }

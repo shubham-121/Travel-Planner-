@@ -14,6 +14,7 @@ import {
 } from "../Slices/FeaturesSlice";
 import Modal from "./utils/Modal";
 import { useNavigate } from "react-router";
+import UserActive from "./userActive";
 
 const API_KEY = import.meta.env.VITE_API_kEY;
 export default function SearchBar() {
@@ -24,30 +25,6 @@ export default function SearchBar() {
     </div>
   );
 }
-// function HeaderTitle() {
-//   return (
-//     <div className="border-custom w-full mt-1 rounded-[10px] flex items-center bg-green-300 font-semibold text-xl p-2">
-//       {/* Home Button (left-aligned) */}
-//       <button className="text-sm sm:text-base px-2 py-1">Home</button>
-//       <button className="text-sm sm:text-base px-2 py-1">AboutUs</button>
-//       <button className="text-sm sm:text-base px-2 py-1">ContactUs</button>
-//       {/* Title (center-aligned) */}
-//       <p className="flex-grow text-center underline text-sm sm:text-lg">
-//         Itinerary Planner
-//       </p>
-
-//       {/* {conditionally render the below SignIn/account button based on use login or new user} */}
-//       <button className="text-sm sm:text-base px-2 py-1">
-//         My Account/SignUp
-//       </button>
-//       {/* {} */}
-
-//       <button className="text-sm sm:text-base px-2 py-1">
-//         Your Itineraries
-//       </button>
-//     </div>
-//   );
-// }
 
 export function HeaderTitle() {
   const navigate = useNavigate();
@@ -76,21 +53,16 @@ export function HeaderTitle() {
       </div>
 
       {/* Center Section (Title) */}
-      <p className="flex-grow text-center underline text-2xl font-bold sm:text-xl text-gray-700">
+      <button
+        className="flex-grow text-center underline text-2xl font-bold sm:text-xl text-gray-700"
+        onClick={() => navigate("/")}
+      >
         The Itinerary Co.
-      </p>
+      </button>
 
       {/* Right Section */}
       <div className="flex space-x-4 justify-start items-start">
-        {/* {conditionally render this based on user login or new user} */}
-        <button
-          className="text-sm sm:text-base px-3 py-1 rounded-md bg-blue-400 hover:bg-blue-500 text-white transition-all"
-          // onClick={() => navigate("/signin")}
-          onClick={() => navigate("/login")}
-        >
-          My Account/Sign Up
-        </button>
-        {/* {conditionally render this based on user login or new user} */}
+        <UserActive></UserActive>
 
         <button
           className="text-sm sm:text-base px-3 py-1 rounded-md bg-blue-400 hover:bg-blue-500 text-white transition-all"

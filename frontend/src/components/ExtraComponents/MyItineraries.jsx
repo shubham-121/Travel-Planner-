@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { removeWishList } from "../../Slices/FeaturesSlice";
 import { useState } from "react";
+import { beautifyString } from "../utils/helperFunctions";
 
 export default function MyItineraries() {
   return (
@@ -26,10 +27,46 @@ export default function MyItineraries() {
 function Itinerary() {
   const { wishlist } = useSelector((store) => store.Features);
 
+  const { isUserActive, userActiveData } = useSelector(
+    (store) => store.ActiveUser
+  );
+  const dispatch = useDispatch();
+
+  async function fetchItinerary() {
+    try {
+      const res = await fetch("http://localhost:5000/myItineraries", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (res.status === 200) {
+        console.log("Itinerary data:", data);
+        alert("User session is valid", data.userSession);
+      } else {
+        console.error("Error:", data.message || "Unknown error");
+        console.error("Not valid session:", data.session);
+        alert(data.message || "Error in logging the user.");
+      }
+
+      if (!data) alert("Problem in fetching itinerary");
+    } catch (err) {
+      console.log(
+        "Error occured while fetching the itinerary data",
+        err.message
+      );
+    }
+  }
+
   return (
     <div className="flex items-center justify-center  flex-col">
       <p className="border-custom w-[50%] text-center mt-5 rounded-full font-semibold text-xl p-1 bg-blue-100">
-        Plan Your Itinerary
+        {isUserActive
+          ? `Hi! ${beautifyString(
+              userActiveData.userName
+            )}, Plan Your Itinerary Today`
+          : `Plan Your Itinerary Today`}
       </p>
       {wishlist.length > 0 ? (
         <RenderItineraryPlaces wishlist={wishlist}></RenderItineraryPlaces>
@@ -38,6 +75,12 @@ function Itinerary() {
           No places in your itinerary currently
         </p>
       )}
+      <button
+        className="border-custom bg-gray-500 rounded-full hover:scale-110"
+        onClick={fetchItinerary}
+      >
+        Fetch Itinerary
+      </button>
     </div>
   );
 }
