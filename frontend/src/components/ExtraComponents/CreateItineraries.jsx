@@ -5,13 +5,13 @@ import { useNavigate } from "react-router";
 import { removeWishList } from "../../Slices/FeaturesSlice";
 import { useState } from "react";
 import { beautifyString } from "../utils/helperFunctions";
-import { SortBtn } from "../utils/ItineraryPage components/SortBtn";
-import { RemoveBtn } from "../utils/ItineraryPage components/RemoveBtn";
-import { GoBack } from "../utils/ItineraryPage components/GoBack";
-import { RenderItineraryPlaces } from "../utils/ItineraryPage components/RenderItineraryPlaces";
+import { SortBtn } from "../utils/CreateItineraryPage components/SortBtn";
+import { RemoveBtn } from "../utils/CreateItineraryPage components/RemoveBtn";
+import { GoBack } from "../utils/CreateItineraryPage components/GoBack";
+import { RenderItineraryPlaces } from "../utils/CreateItineraryPage components/RenderItineraryPlaces";
 import { setUserPlaces, toggleUserPlaces } from "../../Slices/UserItinerary";
 
-export default function MyItineraries() {
+export default function CreateItineraries() {
   return (
     <div
       className="bg-blue-100 h-full w-full overflow-auto bg-cover bg-center"
@@ -33,6 +33,7 @@ export default function MyItineraries() {
 // then use this to save the data to the Db, and fetch the data from the Db when user visit same page again
 
 function Itinerary() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { wishlist } = useSelector((store) => store.Features);
 
@@ -45,8 +46,7 @@ function Itinerary() {
     (store) => store.ActiveUser
   );
 
-
-  //session valid kar raha hai, no need though just for testing 
+  //session valid kar raha hai, no need though just for testing
   async function fetchItinerary() {
     try {
       const res = await fetch("http://localhost:5000/myItineraries", {
@@ -94,7 +94,7 @@ function Itinerary() {
 
     //save to the DB
     try {
-      const res = await fetch("http://localhost:5000/myItineraries", {
+      const res = await fetch("http://localhost:5000/createItineraries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -154,53 +154,14 @@ function Itinerary() {
         >
           Save Itinerary
         </button>
+
+        <button
+          className="px-2 py-2 border-custom bg-gray-500 rounded-full hover:scale-110"
+          onClick={() => navigate("/savedItineraries")}
+        >
+          Saved Itineraries from DB
+        </button>
       </div>
     </div>
   );
 }
-
-//delete below this
-// function RenderItineraryPlaces({ wishlist, dates, setDates }) {
-//   function handleDates(e, idx) {
-//     const newDates = [...dates];
-//     newDates[idx] = e.target.value;
-//     setDates(newDates);
-
-//     console.log(`Date update for ${idx} is : ${newDates}`);
-//   }
-
-//   //function for handling the priority for priority sort
-//   function handlePriority() {}
-//   return (
-//     <div className="w-[80%] border-custom mt-4 flex flex-col items-center justify-center bg-blue-50 px-1 py-5 rounded-[20px]">
-//       <ol className="w-[80%] flex flex-col space-y-4 mt-2 p-1">
-//         {wishlist.map((place, idx) => (
-//           <li
-//             key={idx}
-//             className=" flex justify-between items-center p-2   bg-slate-300 rounded-md"
-//           >
-//             <span className="text-lg font-medium">
-//               {idx + 1}. {place}
-//             </span>
-
-//             <span>
-//               <input
-//                 className="px-2 py-1 text-center border rounded-md w-32 "
-//                 type="date"
-//                 value={dates[idx]}
-//                 onChange={(e) => handleDates(e, idx)}
-//               ></input>
-//             </span>
-
-//             <span>
-//               Priority:
-//               <input type="number" className="w-8 rounded-2xl border"></input>
-//             </span>
-
-//             <RemoveBtn idx={idx}></RemoveBtn>
-//           </li>
-//         ))}
-//       </ol>
-//     </div>
-//   );
-// }

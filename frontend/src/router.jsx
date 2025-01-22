@@ -2,12 +2,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AboutUs from "./components/ExtraComponents/AboutUs";
 import App from "./App";
 import ContactUs from "./components/ExtraComponents/ContactUs";
-import MyItineraries from "./components/ExtraComponents/MyItineraries";
+import MyItineraries from "./components/ExtraComponents/CreateItineraries";
 import Login from "./components/ExtraComponents/Login";
 import Signin from "./components/ExtraComponents/Signin";
 import Homepage from "./components/ExtraComponents/Homepage";
 import PasswordChange from "./components/ExtraComponents/PasswordChange";
 import { HeaderTitle } from "./components/SearchBar";
+import CreateItineraries from "./components/ExtraComponents/CreateItineraries";
+import MySavedItineraries from "./components/ExtraComponents/MySavedItineraries";
 
 const appRouter = createBrowserRouter([
   {
@@ -48,8 +50,13 @@ const appRouter = createBrowserRouter([
     ],
   },
   {
-    path: "/myItineraries",
-    element: <MyItineraries></MyItineraries>,
+    path: "/createItineraries",
+
+    element: <CreateItineraries></CreateItineraries>,
+  },
+  {
+    path: "/savedItineraries",
+    element: <MySavedItineraries></MySavedItineraries>,
   },
   {
     path: "/login",

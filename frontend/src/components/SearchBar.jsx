@@ -66,7 +66,7 @@ export function HeaderTitle() {
 
         <button
           className="text-sm sm:text-base px-3 py-1 rounded-md bg-blue-400 hover:bg-blue-500 text-white transition-all"
-          onClick={() => navigate("/myItineraries")}
+          onClick={() => navigate("/createItineraries")}
         >
           Your Itineraries
         </button>

@@ -18,6 +18,7 @@ const myItinerary = require("./controllers/user/myItinerary");
 const UserSession = require("./models/session");
 const userActive = require("./controllers/user/userActive");
 const itineraryUpload = require("./controllers/user/itineraryUpload");
+const fetchUserSavedItineraries = require("./controllers/user/fetchItineraries");
 
 const app = express();
 
@@ -55,10 +56,11 @@ app.get("/validUser", checkSession, userActive); //check whether user is activel
 
 app.post("/logout", checkSession, logOutUser); //clear cookies here
 
-app.post("/myItineraries", checkSession, itineraryUpload); //save itineraries to the Db here       createItineraries
+// app.post("/myItineraries", checkSession, itineraryUpload); //save itineraries to the Db here       createItineraries  delete this later
 
-// app.post("/createItineraries", checkSession, itineraryUpload); //save itineraries to the Db here     delete this if err occur and uncomment above one
+app.post("/createItineraries", checkSession, itineraryUpload); //save itineraries to the Db here     delete this if err occur and uncomment above one
 
+app.get("/savedItineraries", checkSession, fetchUserSavedItineraries); //fetch itineraries from the DB of the loggedin  user
 //server run
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server is up and running"));
