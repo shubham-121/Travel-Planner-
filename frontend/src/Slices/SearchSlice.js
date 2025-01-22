@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   searchLocCoords: [], //global state for holding search location coords
   searchLocName: "", //global state for holding search location name
+  isInitialLocCoords: false,
+  initialLocCoords: [], //store initial cords, when user click home button, navigate to initial location in map using this
 };
 
 const SearchSlice = createSlice({

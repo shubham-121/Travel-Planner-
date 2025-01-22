@@ -61,6 +61,11 @@ const FeaturesSlice = createSlice({
       const removeIdx = action.payload;
       state.visited = state.visited.filter((_, idx) => idx !== removeIdx);
     },
+    deleteWishlist(state) {
+      state.wishlist = [];
+      state.isWishClicked = false;
+      console.log("after logout,wishlist deleted", state.wishlist);
+    },
   },
 });
 
@@ -75,4 +80,5 @@ export const {
   removeFavourites,
   removeVisited,
   removeWishList,
+  deleteWishlist,
 } = FeaturesSlice.actions;

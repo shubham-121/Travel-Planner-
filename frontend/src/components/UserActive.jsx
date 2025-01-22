@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { deleteActiveUser, toggleActiveUser } from "../Slices/ActiveUserSlice";
 import { beautifyString } from "./utils/helperFunctions";
+import { deleteUserPlaces } from "../Slices/UserItinerary";
+import { deleteWishlist } from "../Slices/FeaturesSlice";
 
 //
 export default function UserActive() {
@@ -50,6 +52,9 @@ function CheckUserValid() {
         err.message
       );
     }
+
+    dispatch(deleteUserPlaces());
+    dispatch(deleteWishlist()); //empty user itinerary
     navigate("/");
   }
 

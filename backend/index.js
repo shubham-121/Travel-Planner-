@@ -17,6 +17,7 @@ const checkSession = require("./controllers/user/checkSession");
 const myItinerary = require("./controllers/user/myItinerary");
 const UserSession = require("./models/session");
 const userActive = require("./controllers/user/userActive");
+const itineraryUpload = require("./controllers/user/itineraryUpload");
 
 const app = express();
 
@@ -53,6 +54,10 @@ app.get("/myItineraries", checkSession, myItinerary); //check sessionn first the
 app.get("/validUser", checkSession, userActive); //check whether user is actively login or not based on it send cookie as a  response
 
 app.post("/logout", checkSession, logOutUser); //clear cookies here
+
+app.post("/myItineraries", checkSession, itineraryUpload); //save itineraries to the Db here       createItineraries
+
+// app.post("/createItineraries", checkSession, itineraryUpload); //save itineraries to the Db here     delete this if err occur and uncomment above one
 
 //server run
 const PORT = process.env.PORT || 5000;
