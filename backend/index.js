@@ -19,6 +19,7 @@ const UserSession = require("./models/session");
 const userActive = require("./controllers/user/userActive");
 const itineraryUpload = require("./controllers/user/itineraryUpload");
 const fetchUserSavedItineraries = require("./controllers/user/fetchItineraries");
+const UserItinerary = require("./models/userItinerary");
 
 const app = express();
 
@@ -62,6 +63,55 @@ app.post("/createItineraries", checkSession, itineraryUpload); //save itinerarie
 
 app.get("/savedItineraries", checkSession, fetchUserSavedItineraries); //fetch itineraries from the DB of the loggedin  user
 //server run
+
+app.delete(
+  "/savedItineraries/:userId/:placeId",
+  checkSession,
+  async (req, res) => {
+    // we use url for deleting place from user itinerary
+    // url is like this: `http://localhost:5000/savedItineraries/${userId}/${placeId}`,
+
+    //now write the delete logic below using userId and placeId
+
+    const params = req.params;
+    const { userId, placeId } = req.params;
+
+    //userid and placeid validation
+    if (!userId || !placeId) {
+      return res.status(400).json({ message: "Invalid userId or placeId" });
+    }
+
+    console.log("Deleting  place with index:", params, userId, placeId);
+
+    try {
+      const deletedPlace = await UserItinerary.findOneAndUpdate(
+        { userId },
+        { $pull: { itinerary: { _id: placeId } } },
+        { new: true }
+      );
+
+      if (!deletedPlace) {
+        return res.status(400).json({
+          message: "Cannot delete the place from DB",
+          deletedPlace: deletedPlace,
+        });
+      }
+
+      console.log("Deleted place successfull", deletedPlace);
+
+      return res
+        .status(200)
+        .json({ message: "Deleted place succesfully", deletedPlace });
+    } catch (error) {
+      console.error("Error deleting place:", error.message);
+      return res.status(500).json({
+        message: "Error deleting place from DB",
+        error: error.message,
+      });
+    }
+  }
+);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server is up and running"));
 

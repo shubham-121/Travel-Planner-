@@ -6,7 +6,7 @@ export function RemoveBtn({ idx }) {
   return (
     <button
       onClick={() => dispatch(removeWishList(idx))}
-      className="px-2 py-1  rounded-full bg-red-400 text-white hover:bg-red-500 w-[5%]"
+      className="px-3 py-1 rounded-full bg-red-500 text-white font-semibold hover:bg-red-600 hover:scale-105 transition-all w-10 flex items-center justify-center"
     >
       X
     </button>

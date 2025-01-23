@@ -10,7 +10,7 @@ export default function AboutUs() {
       style={{ backgroundAttachment: "fixed" }}
     >
       <Outlet></Outlet>
-      <Header></Header>
+      {/* <Header></Header> */}
       <MainBody></MainBody>
       <MainContent></MainContent>
       <DetailedContent></DetailedContent>

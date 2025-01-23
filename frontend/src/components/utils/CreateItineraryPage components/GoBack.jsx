@@ -5,14 +5,14 @@ export function GoBack({ route }) {
 
   return (
     <button
-      className="font-semibold text-l px-6 py-2.5 mt-4 ml-6  border-custom bg-gray-400 rounded-full hover:scale-105 "
+      className="font-semibold text-base px-6 py-2 mt-4 ml-6 bg-gray-500 text-white rounded-full border border-gray-400 hover:bg-gray-600 hover:scale-105 transition-all"
       onClick={() =>
         route === "createItineraries"
           ? navigate("/createItineraries")
           : navigate("/")
       }
     >
-      Go back
+      Go Back
     </button>
   );
 }

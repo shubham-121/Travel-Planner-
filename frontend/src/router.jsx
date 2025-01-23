@@ -9,7 +9,8 @@ import Homepage from "./components/ExtraComponents/Homepage";
 import PasswordChange from "./components/ExtraComponents/PasswordChange";
 import { HeaderTitle } from "./components/SearchBar";
 import CreateItineraries from "./components/ExtraComponents/CreateItineraries";
-import MySavedItineraries from "./components/ExtraComponents/MySavedItineraries";
+import MySavedItineraries from "./components/ExtraComponents/MySavedItineraries/MySavedItineraries";
+import { loader as getSavedItineraryFromDB } from "./components/ExtraComponents/MySavedItineraries/SavedItineraryLoader";
 
 const appRouter = createBrowserRouter([
   {
@@ -55,8 +56,10 @@ const appRouter = createBrowserRouter([
     element: <CreateItineraries></CreateItineraries>,
   },
   {
+    //add data loader in this route
     path: "/savedItineraries",
     element: <MySavedItineraries></MySavedItineraries>,
+    loader: getSavedItineraryFromDB,
   },
   {
     path: "/login",

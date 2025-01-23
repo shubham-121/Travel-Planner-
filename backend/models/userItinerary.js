@@ -12,14 +12,14 @@ const itinerarySchema = new mongoose.Schema({
       date: { type: String, required: true },
     },
   ],
-  //   userName: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   userEmail: {
-  //     type: String,
-  //     required: true,
-  //   },
+  // userName: {
+  //   type: String,
+  //   required: true,
+  // },
+  // userEmail: {
+  //   type: String,
+  //   required: true,
+  // },
 });
 
 const UserItinerary = mongoose.model("userItinerary", itinerarySchema);

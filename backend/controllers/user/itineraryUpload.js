@@ -1,9 +1,6 @@
-const mongoose = require("mongoose");
-const User = require("../../models/userModel");
-const UserSession = require("../../models/session");
 const UserItinerary = require("../../models/userItinerary");
 
-//receive data and upload it ti the Db
+//receive data and upload it to the Db
 
 async function itineraryUpload(req, res) {
   const body = req.body;
@@ -19,6 +16,7 @@ async function itineraryUpload(req, res) {
   console.log("Itinerary for saving to Db", body);
 
   //1- first check whether user exsist in DB already, if yes then update his record in order to prevent duplicate copies
+  let updatedItinerary = [];
 
   try {
     const exsistingUser = await UserItinerary.findOne({
@@ -35,7 +33,7 @@ async function itineraryUpload(req, res) {
 
       //filter out the duplicate places first from the newItinerary
 
-      const updatedItinerary = [
+      updatedItinerary = [
         ...prevItinerary,
         ...newItinerary.filter(
           (newItem) =>
@@ -47,10 +45,10 @@ async function itineraryUpload(req, res) {
 
       console.log("Updated Itinerary:", updatedItinerary);
 
-      return res.status(200).json({
-        message: "Exsisting user found",
-        exsistingUser: exsistingUser,
-      });
+      // return res.status(200).json({
+      //   message: "Exsisting user found",
+      //   exsistingUser: exsistingUser,
+      // });
     }
   } catch (error) {
     console.error("Error checking exsisting user in the DB", error);
@@ -61,36 +59,29 @@ async function itineraryUpload(req, res) {
   }
 
   //2-replace the exsisting user data with updated data
+  console.log("Exsisiting user id:", exsistingUserId);
   try {
-    const updatedUserItinerary = await UserItinerary.findByIdAndUpdate(
-      exsistingUserId,
+    const updatedUserItinerary = await UserItinerary.findOneAndUpdate(
+      { userId: exsistingUserId },
       { itinerary: updatedItinerary },
       { new: true }
     );
 
-    if (!updatedUserItinerary) {
-      console.log(
-        "Error encountered while updating the exsisting user itinerary",
-        updatedUserItinerary
-      );
+    console.log("Updated user itinerary", updatedUserItinerary);
 
-      return res.status(400).json({
-        message: "Error in updating the exsisiting user",
-        exsistingUser: exsistingUser,
+    if (updatedUserItinerary) {
+      console.log(" exsisting user itineraryupdated", updatedUserItinerary);
+
+      return res.status(200).json({
+        message: " the exsisiting user updated in the DB",
         updatedUserItinerary: updatedUserItinerary,
       });
     }
-
-    return res.status(200).json({
-      message: "Exsisting user found and updated",
-      exsistingUser: exsistingUser,
-      updatedUserItinerary: updatedUserItinerary,
-    });
   } catch (error) {
     console.error("Error while finding and updating user", error.message);
   }
 
-  // 3-  create a new UserItinerary obj and save to Db
+  // 3-  create a new UserItinerary obj (if user not exsists in DB) and save to Db
   try {
     const newItinerary = await UserItinerary.create({
       itinerary: body,
@@ -111,11 +102,6 @@ async function itineraryUpload(req, res) {
       error: error.message,
     });
   }
-
-  //   return res.status(200).json({
-  //     message: "Saved itineraries successfully to the database",
-  //     itinerary: body,
-  //   });
 }
 
 module.exports = itineraryUpload;

@@ -20,6 +20,7 @@ async function checkUserSesssion(req, res, next) {
 
   req.session = validSession; //attach session to the req object so that it can be passed from middleware and used in the route
   req.userId = userId.toString();
+
   next();
 }
 

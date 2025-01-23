@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isUserPlaces: false,
-  userPlaces: {}, //holds the active user itinerary places, using this data will be saved in Db
+  userPlaces: [], //holds the active user itinerary places, using this data will be saved in Db
 };
 
 const UserItineraryPlaces = createSlice({
@@ -19,6 +19,7 @@ const UserItineraryPlaces = createSlice({
       console.log("itinerary before saving to the Db", action.payload);
 
       state.userPlaces = action.payload;
+      // state.userPlaces = [...action.payload];
       console.log("itinerary after saving to the Db", state.userPlaces);
     },
 
